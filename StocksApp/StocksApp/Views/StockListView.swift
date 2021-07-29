@@ -24,34 +24,30 @@ struct StockCellView: View {
     
     var body: some View {
         HStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(stock.symbol)
-                        .font(.custom("Arial", size: 22))
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    Text(stock.description)
-                        .font(.custom("Arial", size: 18))
-                        .foregroundColor(.gray)
-                }
-            }
-            Spacer()
-            VStack {
-                Text(stock.price)
-                    .foregroundColor(.white)
+            VStack(alignment: .leading) {
+                Text(stock.symbol)
                     .font(.custom("Arial", size: 22))
-                Button(stock.change) { }
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                Text(stock.description)
+                    .font(.custom("Arial", size: 18))
+                    .foregroundColor(.gray)
+            }
+        }
+        Spacer()
+        VStack {
+            Text(stock.price)
+                .foregroundColor(.white)
+                .font(.custom("Arial", size: 22))
+            Button(stock.change) { }
                 .frame(width: 75)
                 .padding(5)
                 .background(Color.red)
                 .foregroundColor(.white)
                 .cornerRadius(6)
-                
-            }
+            
         }
-        .background(Color.black)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
     
 }
