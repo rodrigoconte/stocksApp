@@ -12,10 +12,19 @@ struct ContentView: View {
     @ObservedObject private var stockListViewModel = StockListViewModel()
     
     init() {
-        UINavigationBar.appearance().backgroundColor = .black
-        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        UITableView.appearance().backgroundColor = .black
-        UITableViewCell.appearance().backgroundColor = .black
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = UIColor(displayP3Red: 47 / 255, green: 54 / 255, blue: 64 / 255, alpha: 1.0)
+            UINavigationBar.appearance().standardAppearance = navBarAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        } else {
+            UINavigationBar.appearance().barTintColor = UIColor(displayP3Red: 47 / 255, green: 54 / 255, blue: 64 / 255, alpha: 1.0)
+            UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        }
         
         stockListViewModel.load()
     }
@@ -34,7 +43,7 @@ struct ContentView: View {
                     .fontWeight(.bold)
                     .foregroundColor(Color.gray)
                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                    .offset(y: -320)
+                    .offset(y: -310)
                 
                 SearchView(searchTerm: self.$stockListViewModel.searchTerm)
                     .offset(y: -260)
