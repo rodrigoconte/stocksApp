@@ -51,8 +51,18 @@ struct ContentView: View {
                 StockListView(stocks: filteredStock)
                     .offset(y: 100)
                 
-                NewsArticleView(newsArtices: self.stockListViewModel.articles)
-                    .offset(y: 500)
+                NewsArticleView(newsArtices: self.stockListViewModel.articles,
+                                onDragBegin: { value in
+                                    self.stockListViewModel.dragOffSet = value.translation
+                                }, onDragEnd: { value in
+                                    if value.translation.height < 0 {
+                                        self.stockListViewModel.dragOffSet = CGSize(width: 0, height: 100)
+                                    } else {
+                                        self.stockListViewModel.dragOffSet = CGSize(width: 0, height: 680)
+                                    }
+                                })
+                    .animation(.spring())
+                    .offset(y: stockListViewModel.dragOffSet.height)
                 
             }.navigationBarTitle("Stocks")
         }.edgesIgnoringSafeArea(Edge.Set(.bottom))
